@@ -147,11 +147,19 @@ table#report_list .report_name {
 }
 
 table#report_list .report_date {
-    width: 20%;
+    width: 18%;
 }
 
 table#report_list .report_title {
-    width: 37%;
+    width: 30%;
+}
+
+table#report_list .report_enter {
+    width: 5%;
+}
+
+table#report_list .report_leave {
+    width: 5%;
 }
 
 table#report_list .report_action {
