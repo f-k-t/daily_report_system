@@ -35,20 +35,25 @@ public class ReportsUpdateServlet extends HttpServlet {
     /**
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
      */
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String _token = (String)request.getParameter("_token");
-        if(_token != null && _token.equals(request.getSession().getId())) {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String _token = (String) request.getParameter("_token");
+        if (_token != null && _token.equals(request.getSession().getId())) {
             EntityManager em = DBUtil.createEntityManager();
 
-            Report r = em.find(Report.class, (Integer)(request.getSession().getAttribute("report_id")));
+            Report r = em.find(Report.class, (Integer) (request.getSession().getAttribute("report_id")));
 
             r.setReport_date(Date.valueOf(request.getParameter("report_date")));
             r.setTitle(request.getParameter("title"));
+
+            r.setEnter_time(request.getParameter("enter_time"));
+            r.setLeave_time(request.getParameter("leave_time"));
+
             r.setContent(request.getParameter("content"));
             r.setUpdated_at(new Timestamp(System.currentTimeMillis()));
 
             List<String> errors = ReportValidator.validate(r);
-            if(errors.size() > 0) {
+            if (errors.size() > 0) {
                 em.close();
 
                 request.setAttribute("_token", request.getSession().getId());
